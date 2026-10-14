@@ -1,0 +1,218 @@
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Futebol</title>
+    <style>
+        /* Estilos gerais da página */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #222;
+        }
+
+        header {
+            background-color: #185c32;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 { margin: 0 0 15px; }
+        nav a { color: white; margin: 8px; display: inline-block; }
+
+        /* Apresentação principal */
+        .inicio {
+            background-color: #267a43;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .inicio h2 { font-size: 32px; }
+        .inicio p { margin-bottom: 30px; }
+
+        .botao {
+            display: inline-block;
+            background-color: #185c32;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border: 0;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        section { padding: 35px 20px; }
+        section h2 { text-align: center; }
+        .descricao { text-align: center; }
+        .conteudo { max-width: 1000px; margin: auto; }
+
+        /* Cards organizados em linhas */
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            width: 260px;
+        }
+
+        .card h3 { color: #185c32; }
+        p { line-height: 1.6; }
+
+        #sobre { background-color: #dfeee2; }
+        .sobre-texto { max-width: 700px; margin: auto; }
+        #depoimentos .card { text-align: center; }
+        #contato { background-color: #dfeee2; }
+
+        /* Formulário simples, sem envio de dados */
+        form {
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label { display: block; margin-top: 15px; }
+        input, textarea {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            font: inherit;
+        }
+
+        textarea { height: 100px; }
+        form .botao { margin-top: 15px; }
+        .aviso { font-size: 14px; color: #555; }
+
+        footer {
+            background-color: #185c32;
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nome e menu -->
+    <header>
+        <h1>Arena Futebol</h1>
+        <nav aria-label="Menu principal">
+            <a href="#atividades">Atividades</a>
+            <a href="#sobre">Sobre nós</a>
+            <a href="#depoimentos">Depoimentos</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="inicio">
+            <h2>Futebol, amizade e diversão</h2>
+            <p>Um espaço para quem gosta de jogar bola e fazer parte de um time.</p>
+            <a class="botao" href="#atividades">Conheça as atividades</a>
+        </section>
+
+        <section id="atividades">
+            <div class="conteudo">
+                <h2>Nossas atividades</h2>
+                <p class="descricao">Confira o que você pode encontrar na Arena Futebol.</p>
+                <div class="cards">
+                    <article class="card">
+                        <h3>Treinos</h3>
+                        <p>Pratique passes, chutes e outras habilidades básicas do futebol.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Campeonatos</h3>
+                        <p>Participe de competições e se divirta jogando com seu time.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Futebol entre amigos</h3>
+                        <p>Reúna a turma para uma partida e aproveite o tempo livre.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Escolinha</h3>
+                        <p>Aprenda as regras e os primeiros passos dentro de campo.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Trabalho em equipe</h3>
+                        <p>Aprenda a colaborar com seus colegas e a respeitar os adversários.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Jogos amistosos</h3>
+                        <p>Conheça outros times em partidas com espírito esportivo.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre">
+            <div class="sobre-texto">
+                <h2>Sobre nós</h2>
+                <h3>Unidos pela paixão pelo futebol</h3>
+                <p>A Arena Futebol é um projeto fictício para reunir pessoas que gostam de futebol. Nossa proposta é incentivar o esporte, a amizade e o respeito dentro e fora de campo.</p>
+                <p>Aqui, iniciantes também têm espaço para aprender, participar e se divertir.</p>
+            </div>
+        </section>
+
+        <section id="depoimentos">
+            <div class="conteudo">
+                <h2>Depoimentos</h2>
+                <p class="descricao">Exemplos de relatos dos jogadores.</p>
+                <div class="cards">
+                    <article class="card">
+                        <p>“Gostei muito dos treinos e fiz novos amigos.”</p>
+                        <strong>Pedro</strong>
+                    </article>
+                    <article class="card">
+                        <p>“É um lugar legal para aprender e jogar futebol.”</p>
+                        <strong>Lucas</strong>
+                    </article>
+                    <article class="card">
+                        <p>“As partidas com a turma são muito divertidas!”</p>
+                        <strong>Mariana</strong>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato">
+            <h2>Entre em contato</h2>
+            <p class="descricao">Quer saber mais sobre as atividades?</p>
+            <form>
+                <h3>Fale com a gente</h3>
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" name="nome" placeholder="Seu nome">
+                <label for="email">E-mail</label>
+                <input id="email" type="email" name="email" placeholder="Seu e-mail">
+                <label for="time">Time favorito</label>
+                <input id="time" type="text" name="time" placeholder="Nome do seu time">
+                <label for="mensagem">Mensagem</label>
+                <textarea id="mensagem" name="mensagem" placeholder="Escreva sua mensagem"></textarea>
+                <button class="botao" type="button" disabled>Enviar (demonstração)</button>
+                <p class="aviso">Formulário ilustrativo: esta página não envia mensagens.</p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <h3>Arena Futebol</h3>
+        <p>Esporte, amizade e respeito.</p>
+        <p>Projeto de estudo — HTML e CSS.</p>
+    </footer>
+</body>
+</html>
