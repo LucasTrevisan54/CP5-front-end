@@ -1,226 +1,142 @@
 <!DOCTYPE html>
-<!--
-  THE ULTIMATE STREET MATCH — landing page
-  Arquivos: index.html (estrutura) + style.css (visual) + script.js (interações)
-
-  DECISÃO: HTML semântico (header, nav, main, section, table, footer).
-  Motivos: acessibilidade (leitores de tela), SEO e código mais fácil de explicar.
--->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <!-- Mobile-first: sem esta tag o celular "finge" ser uma tela de desktop -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0B0F19">
-  <meta name="description" content="The Ultimate Street Match: torneio de futebol de rua e freestyle. Garanta sua vaga.">
-  <title>The Ultimate Street Match | Futebol de rua e freestyle</title>
-
-  <!-- Fontes: Anton (títulos, impacto) e Inter (corpo, leitura limpa) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-  <!-- "defer" executa o JS só depois do HTML carregar, então não precisamos de DOMContentLoaded -->
-  <script src="script.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorveteria Doce Gelado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-  <!-- Link para quem navega só pelo teclado pular o menu -->
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-
-  <!-- ================= CABEÇALHO / MENU ================= -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="#topo" aria-label="Street Match, início">STREET<span class="logo-mark">/</span>MATCH</a>
-
-      <!-- Botão hambúrguer: só aparece no mobile (controlado no CSS) -->
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
-        <span class="menu-toggle-label">Menu</span>
-        <span class="menu-toggle-bars" aria-hidden="true"></span>
-      </button>
-
-      <nav id="menu-principal" class="nav" aria-label="Principal">
-        <ul class="nav-list">
-          <li><a href="#sobre">O evento</a></li>
-          <li><a href="#partidas">Partidas</a></li>
-          <li><a href="#rodape">Contato</a></li>
-        </ul>
-      </nav>
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#inicio">Doce Gelado</a>
+      <div class="d-flex gap-3">
+        <a class="text-white text-decoration-none" href="#inicio">Início</a>
+        <a class="text-white text-decoration-none" href="#depoimentos">Depoimentos</a>
+        <a class="text-white text-decoration-none" href="#faq">FAQ</a>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <main id="conteudo">
-
-    <!-- ================= HERO ================= -->
-    <section class="hero" id="topo" aria-labelledby="hero-titulo">
-      <!-- Linhas de campo desenhadas só com CSS (decorativo) -->
-      <div class="hero-court" aria-hidden="true"></div>
-
-      <div class="container hero-inner">
-        <h1 id="hero-titulo" class="hero-title">The Ultimate Street Match</h1>
-        <p class="hero-sub">
-          Cinco minutos, uma quadra de rua e ninguém de fora do jogo.
-          Futebol e freestyle valendo placar e aplauso.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#partidas">Garantir vaga</a>
-          <!-- Abre o <dialog> de regras via JS -->
-          <button class="btn btn-ghost" type="button" id="abrir-regras">Ver regras</button>
-        </div>
-
-        <!-- Contador interativo: o JS preenche os números -->
-        <div class="countdown" role="timer" aria-live="off" aria-label="Tempo até a próxima partida">
-          <p class="countdown-label">Próxima partida começa em</p>
-          <dl class="countdown-grid">
-            <div><dt>dias</dt><dd id="cd-dias">00</dd></div>
-            <div><dt>horas</dt><dd id="cd-horas">00</dd></div>
-            <div><dt>min</dt><dd id="cd-min">00</dd></div>
-            <div><dt>seg</dt><dd id="cd-seg">00</dd></div>
-          </dl>
+  <main>
+    <!-- Apresentação -->
+    <section id="inicio" class="bg-light py-5">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-md-6">
+            <h1>Sorvete para deixar seu dia mais doce!</h1>
+            <p>Experimente nossos sorvetes de chocolate, morango e baunilha. Temos um sabor para cada momento!</p>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCompra">Comprar agora</button>
+          </div>
+          <div class="col-md-6">
+            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&amp;auto=format&amp;fit=crop&amp;q=80" class="img-fluid rounded" alt="Taças com sorvete" width="800" height="600">
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Faixa em movimento: o único elemento animado sozinho da página -->
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker-track">
-        <span>Drible • Caneta • Chapéu • Letra • Gol de placa •</span>
-        <span>Drible • Caneta • Chapéu • Letra • Gol de placa •</span>
-      </div>
-    </div>
-
-    <!-- ================= SOBRE O EVENTO ================= -->
-    <section class="section" id="sobre" aria-labelledby="sobre-titulo">
-      <div class="container">
-        <h2 id="sobre-titulo" class="section-title">Como funciona o jogo</h2>
-        <p class="section-lead">Três regras de ouro mudam o futebol que você conhece.</p>
-
-        <div class="cards">
-          <!-- Card 1 -->
-          <article class="card">
-            <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
-            <h3>Velocidade</h3>
-            <p>Partidas de 5 minutos, cronômetro no telão e primeiro a fazer 5 gols vence. Sem pausa, sem enrolação.</p>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="card">
-            <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1z"/></svg>
-            <h3>Estilo</h3>
-            <p>Caneta, chapéu e gol de letra valem ponto extra. A plateia vota no lance da rodada com um grito.</p>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="card">
-            <svg class="card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1l-1.7 1.7M14 11a5 5 0 0 0-7.1 0l-3 3A5 5 0 0 0 11 21.1l1.7-1.7"/></svg>
-            <h3>Conexão</h3>
-            <p>Os times saem de um sorteio na hora. Você começa jogando com desconhecidos e termina o dia com a nova rapaziada.</p>
-          </article>
+    <!-- Depoimentos -->
+    <section id="depoimentos" class="container text-center py-5">
+      <h2>O que dizem nossos clientes</h2>
+      <p class="text-secondary">Veja os relatos de quem já experimentou.</p>
+      <div id="carrossel" class="carousel slide" data-bs-theme="dark">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carrossel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Depoimento 1"></button>
+          <button type="button" data-bs-target="#carrossel" data-bs-slide-to="1" aria-label="Depoimento 2"></button>
+          <button type="button" data-bs-target="#carrossel" data-bs-slide-to="2" aria-label="Depoimento 3"></button>
         </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active p-5">
+            <p class="text-warning" aria-label="5 estrelas">★★★★★</p>
+            <p>“O sorvete de chocolate é muito bom! Vou voltar mais vezes.”</p>
+            <h3 class="h6">Marina Alves</h3>
+          </div>
+          <div class="carousel-item p-5">
+            <p class="text-warning" aria-label="5 estrelas">★★★★★</p>
+            <p>“Gostei muito dos sabores e do atendimento!”</p>
+            <h3 class="h6">Pedro Santos</h3>
+          </div>
+          <div class="carousel-item p-5">
+            <p class="text-warning" aria-label="5 estrelas">★★★★★</p>
+            <p>“O sorvete de morango é meu favorito. Recomendo!”</p>
+            <h3 class="h6">Ana Souza</h3>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carrossel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carrossel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Próximo</span>
+        </button>
       </div>
     </section>
 
-    <!-- ================= CRONOGRAMA ================= -->
-    <section class="section section-alt" id="partidas" aria-labelledby="partidas-titulo">
+    <!-- Perguntas frequentes -->
+    <section id="faq" class="bg-light py-5">
       <div class="container">
-        <h2 id="partidas-titulo" class="section-title">Próximas partidas</h2>
-        <p class="section-lead">Datas e locais fictícios, só para a demonstração do projeto.</p>
-
-        <!-- Tabela de verdade: o conteúdo é tabular (data, local, vagas) -->
-        <div class="table-wrap">
-          <table class="schedule">
-            <caption class="visually-hidden">Calendário das próximas partidas com data, local, categoria e vagas</caption>
-            <thead>
-              <tr>
-                <th scope="col">Data</th>
-                <th scope="col">Local</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Vagas</th>
-                <th scope="col"><span class="visually-hidden">Ação</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- data-label: no mobile o CSS usa este texto como rótulo de cada célula -->
-              <tr>
-                <td data-label="Data"><time datetime="2026-11-21T16:00">21 nov, 16h</time></td>
-                <td data-label="Local">Quadra do Viaduto, Vila Madalena</td>
-                <td data-label="Categoria">Aberta</td>
-                <td data-label="Vagas">12 restantes</td>
-                <td><button class="btn btn-small reserve" type="button">Reservar</button></td>
-              </tr>
-              <tr>
-                <td data-label="Data"><time datetime="2026-12-05T18:00">5 dez, 18h</time></td>
-                <td data-label="Local">Praça da Liga, Pinheiros</td>
-                <td data-label="Categoria">Freestyle</td>
-                <td data-label="Vagas">8 restantes</td>
-                <td><button class="btn btn-small reserve" type="button">Reservar</button></td>
-              </tr>
-              <tr>
-                <td data-label="Data"><time datetime="2026-12-19T15:00">19 dez, 15h</time></td>
-                <td data-label="Local">Cancha do Minhocão, Santa Cecília</td>
-                <td data-label="Categoria">Aberta</td>
-                <td data-label="Vagas">20 restantes</td>
-                <td><button class="btn btn-small reserve" type="button">Reservar</button></td>
-              </tr>
-              <tr>
-                <td data-label="Data"><time datetime="2027-01-16T17:00">16 jan, 17h</time></td>
-                <td data-label="Local">Quadra da Ponte, Santo Amaro</td>
-                <td data-label="Categoria">Final da temporada</td>
-                <td data-label="Vagas">Lista de espera</td>
-                <td><button class="btn btn-small reserve" type="button">Entrar na lista</button></td>
-              </tr>
-            </tbody>
-          </table>
+        <h2 class="text-center mb-4">Perguntas frequentes</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="accordion" id="perguntas">
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#resposta1" aria-expanded="false" aria-controls="resposta1">Quais sabores vocês têm?</button>
+                </h3>
+                <div id="resposta1" class="accordion-collapse collapse" data-bs-parent="#perguntas">
+                  <div class="accordion-body">Temos chocolate, morango e baunilha.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#resposta2" aria-expanded="true" aria-controls="resposta2">Vocês fazem entregas?</button>
+                </h3>
+                <div id="resposta2" class="accordion-collapse collapse show" data-bs-parent="#perguntas">
+                  <div class="accordion-body">Sim! Fazemos entregas nos bairros próximos da sorveteria.</div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#resposta3" aria-expanded="false" aria-controls="resposta3">Qual é o horário de funcionamento?</button>
+                </h3>
+                <div id="resposta3" class="accordion-collapse collapse" data-bs-parent="#perguntas">
+                  <div class="accordion-body">Abrimos todos os dias, das 12h às 22h.</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ================= REGRAS (janela modal nativa) =================
-       <dialog> já traz foco preso, tecla Esc e fundo escurecido sem bibliotecas. -->
-  <dialog id="regras" class="dialog" aria-labelledby="regras-titulo">
-    <h2 id="regras-titulo">Regras da partida</h2>
-    <ol class="rules">
-      <li>Times de 3 jogadores, formados no sorteio da hora.</li>
-      <li>Cada partida dura 5 minutos ou termina com 5 gols.</li>
-      <li>Drible, caneta, chapéu e gol de letra valem ponto de estilo.</li>
-      <li>Sem carrinho e sem contato forte: aqui o jogo é de habilidade.</li>
-      <li>Empate vai para a cobrança de falta, uma por time.</li>
-    </ol>
-    <button class="btn btn-primary" type="button" id="fechar-regras">Entendi</button>
-  </dialog>
-
-  <!-- ================= RODAPÉ ================= -->
-  <footer class="site-footer" id="rodape">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <p class="logo">STREET<span class="logo-mark">/</span>MATCH</p>
-        <p class="footer-text">Projeto acadêmico. Eventos e locais fictícios.</p>
-      </div>
-
-      <nav aria-label="Links rápidos">
-        <h2 class="footer-heading">Links rápidos</h2>
-        <ul class="footer-list">
-          <li><a href="#sobre">O evento</a></li>
-          <li><a href="#partidas">Partidas</a></li>
-          <li><a href="#topo">Voltar ao topo</a></li>
-        </ul>
-      </nav>
-
-      <nav aria-label="Redes sociais">
-        <h2 class="footer-heading">Redes sociais</h2>
-        <ul class="footer-list">
-          <!-- href="#" são placeholders: troque pelos perfis reais -->
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">TikTok</a></li>
-          <li><a href="#">YouTube</a></li>
-        </ul>
-      </nav>
-    </div>
-    <p class="container copyright">&copy; 2026 The Ultimate Street Match.</p>
+  <!-- Rodapé -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">&copy; 2026 Doce Gelado. Todos os direitos reservados.</p>
   </footer>
 
+  <!-- Modal aberto pelo botão Comprar agora -->
+  <div class="modal fade" id="modalCompra" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="tituloModal">Comprar sorvete</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Que tal um sorvete hoje?</p>
+          <p class="mb-0">Visite nossa sorveteria para escolher seu sabor favorito!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- O JavaScript do Bootstrap faz o modal, carrossel e accordion funcionarem -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
