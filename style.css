@@ -1,60 +1,536 @@
-/* Cores e fontes da página */
+/* ==========================================================================
+   THE ULTIMATE STREET MATCH — style.css
+   Abordagem: MOBILE-FIRST. O CSS base é para telas pequenas e as
+   media queries (min-width) só ADICIONAM regras para telas maiores.
+
+   Índice
+   1. Variáveis (design tokens)
+   2. Reset e base
+   3. Utilitários
+   4. Botões
+   5. Cabeçalho e menu
+   6. Hero e contador
+   7. Faixa (ticker)
+   8. Seções e cards
+   9. Tabela de partidas
+   10. Janela de regras
+   11. Rodapé
+   12. Telas maiores
+   13. Movimento reduzido
+   ========================================================================== */
+
+
+/* 1. VARIÁVEIS ------------------------------------------------------------
+   Todas as cores e medidas ficam aqui: mudar a identidade visual
+   é editar este bloco, sem caçar valores pelo arquivo. */
+:root {
+  /* Paleta */
+  --bg: #0B0F19;                          /* fundo quase preto */
+  --lime: #00FF66;                        /* verde limão elétrico (destaque) */
+  --white: #FFFFFF;
+  --gray: #C9CFDA;                        /* cinza claro para textos de apoio */
+  --surface: rgba(255, 255, 255, 0.05);   /* vidro: fundo translúcido dos cards */
+  --line: rgba(255, 255, 255, 0.14);      /* borda sutil */
+
+  /* Tipografia */
+  --font-title: "Anton", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Espaçamento e forma */
+  --space: 1rem;
+  --radius: 14px;
+  --shadow-hard: 6px 6px 0 var(--lime);   /* sombra "dura": marca do estilo neo-brutalista */
+  --header-h: 64px;
+}
+
+
+/* 2. RESET E BASE --------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;                /* rolagem suave ao clicar nos links âncora */
+  scroll-padding-top: var(--header-h);    /* evita o título ficar escondido atrás do menu fixo */
+}
+
 body {
   margin: 0;
-  background-color: #F7F3EB;
-  color: #171717;
-  font-family: 'Work Sans', sans-serif;
+  background: var(--bg);
+  color: var(--gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, blockquote {
-  font-family: 'Fraunces', serif;
+h1, h2, h3 {
+  margin: 0;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-weight: 400;                       /* Anton já é pesada; evita "negrito falso" */
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-p { line-height: 1.6; }
-.container { width: 85%; max-width: 1000px; margin: auto; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
 
-/* Menu */
-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; }
-nav span, .etapas span { color: #9A3324; }
-nav a { margin-left: 20px; color: #171717; text-decoration: none; }
-nav a:hover { text-decoration: underline; }
+/* Foco visível para quem usa teclado (acessibilidade) */
+:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 3px;
+}
 
-/* Apresentação */
-.hero { display: flex; gap: 70px; padding: 65px 0; }
-.hero > div { flex: 1; }
-h1 { font-size: 42px; margin-top: 0; }
-.botao { display: inline-block; background-color: #9A3324; color: white; padding: 12px 20px; text-decoration: none; margin-top: 10px; }
-.generos p { border-top: 1px solid #ccc; padding: 15px 0; margin: 0; }
 
-/* Quatro etapas */
-.sobre { background-color: #ECE5D9; padding: 35px 0; }
-.etapas { display: flex; gap: 25px; margin-top: 30px; }
-.etapas > div { flex: 1; border-left: 1px solid #cbbfb0; padding-left: 15px; }
-.etapas span { font-size: 22px; }
-.etapas h3 { margin-bottom: 5px; }
-.etapas p { font-size: 14px; }
+/* 3. UTILITÁRIOS ---------------------------------------------------------- */
+.container {
+  width: min(100% - 2rem, 1100px);        /* 1rem de margem de cada lado, máximo 1100px */
+  margin-inline: auto;
+}
 
-/* Galeria */
-.galeria { padding: 40px 0; }
-.grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
-.grid > div { background-color: #9A3324; color: white; padding: 25px; min-height: 75px; display: flex; align-items: end; }
-.grid .acao { grid-row: span 2; background-color: #171717; }
-.grid .ficcao { grid-column: span 2; }
+/* Esconde visualmente, mas mantém para leitores de tela */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 
-/* Depoimento e rodapé */
-.depoimento { border-top: 1px solid #ccc; padding: 30px 0; }
-blockquote { border-left: 2px solid #9A3324; padding-left: 20px; margin: 20px 0; font-size: 22px; font-style: italic; max-width: 650px; }
-.depoimento p { font-size: 13px; }
-footer { background-color: #171717; color: #F7F3EB; padding: 25px 0; }
-footer p { font-size: 14px; }
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--lime);
+  color: var(--bg);
+  font-weight: 700;
+}
+.skip-link:focus { top: 1rem; }
 
-/* Ajuste básico para celular */
-@media (max-width: 700px) {
-  nav, .hero, .etapas { flex-direction: column; gap: 20px; }
-  nav { padding-bottom: 20px; }
-  nav a { margin: 0 8px; }
-  h1 { font-size: 32px; }
-  .hero { padding: 40px 0; }
-  .grid { grid-template-columns: 1fr 1fr; }
-  .grid .acao { grid-column: span 2; grid-row: auto; }
+
+/* 4. BOTÕES --------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.8rem;
+  border: 2px solid var(--lime);
+  border-radius: 6px;
+  font: 700 1rem/1 var(--font-body);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  /* Só animamos transform e sombra: leve para o navegador */
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--lime);
+  color: var(--bg);
+  box-shadow: 4px 4px 0 var(--white);
+}
+/* Hover marcante: o botão "afunda" até encostar na sombra */
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--white);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--lime);
+}
+.btn-ghost:hover {
+  background: var(--lime);
+  color: var(--bg);
+}
+
+.btn-small {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--lime);
+}
+.btn-small:hover { background: var(--lime); color: var(--bg); }
+/* Estado depois de reservar (classe adicionada pelo JS) */
+.btn-small.is-reserved {
+  background: var(--lime);
+  color: var(--bg);
+}
+
+
+/* 5. CABEÇALHO E MENU ----------------------------------------------------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: rgba(11, 15, 25, 0.75);
+  backdrop-filter: blur(12px);            /* glassmorphism leve */
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logo {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+.logo-mark { color: var(--lime); }
+
+/* Botão do menu mobile */
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  background: none;
+  border: 0;
+  color: var(--white);
+  font: 700 0.95rem var(--font-body);
+  cursor: pointer;
+}
+/* As três barrinhas do hambúrguer feitas com uma barra + 2 pseudo-elementos */
+.menu-toggle-bars,
+.menu-toggle-bars::before {
+  display: block;
+  width: 22px; height: 2px;
+  background: currentColor;
+  transition: transform 0.2s ease;
+}
+.menu-toggle-bars { position: relative; box-shadow: 0 7px 0 currentColor; }
+.menu-toggle-bars::before { content: ""; position: absolute; top: 14px; }
+/* Quando aberto (aria-expanded="true"), vira um "X" */
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars { transform: translateY(7px) rotate(45deg); box-shadow: none; }
+.menu-toggle[aria-expanded="true"] .menu-toggle-bars::before { transform: translateY(-14px) rotate(-90deg); top: 14px; }
+
+/* Menu no mobile: painel que desce abaixo do cabeçalho */
+.nav {
+  position: absolute;
+  top: var(--header-h);
+  left: 0; right: 0;
+  display: none;                          /* escondido até o JS adicionar .is-open */
+  background: rgba(11, 15, 25, 0.96);
+  border-bottom: 1px solid var(--line);
+}
+.nav.is-open { display: block; }
+
+.nav-list a {
+  display: block;
+  padding: 1.1rem 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--white);
+  font-weight: 500;
+}
+.nav-list a:hover { color: var(--lime); }
+
+
+/* 6. HERO E CONTADOR ------------------------------------------------------ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;                     /* svh = altura real visível no celular (sem barra do navegador) */
+  padding: calc(var(--header-h) + 2rem) 0 3rem;
+}
+
+/* Linhas de campo: círculo central + linha do meio, só com gradientes */
+.hero-court {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--line), var(--line)) center / 2px 100% no-repeat,
+    radial-gradient(circle at center, transparent 0 calc(min(40vw, 260px) - 2px), var(--line) calc(min(40vw, 260px) - 2px) min(40vw, 260px), transparent min(40vw, 260px));
+  /* Brilho verde saindo do canto, para dar profundidade */
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -20%; bottom: -30%;
+  width: 70vw; height: 70vw;
+  background: radial-gradient(circle, rgba(0, 255, 102, 0.22), transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 1; }
+
+/* O título é o elemento principal da página: grande, branco, com sombra dura verde */
+.hero-title {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, 17vw, 9.5rem);   /* clamp = mínimo, ideal (fluido), máximo */
+  line-height: 0.92;
+  text-shadow: 5px 5px 0 var(--lime);
+}
+
+.hero-sub {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--gray);
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;                 /* empilhados no mobile */
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Contador */
+.countdown {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.countdown-label { font-size: 0.9rem; }
+
+.countdown-grid {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0.5rem 0 0;
+}
+.countdown-grid div { text-align: center; }
+.countdown-grid dd {
+  margin: 0;
+  font: 400 2.4rem/1 var(--font-title);
+  color: var(--lime);
+  font-variant-numeric: tabular-nums;     /* números com largura fixa: o contador não "pula" */
+}
+.countdown-grid dt {
+  order: 2;
+  font-size: 0.8rem;
+}
+.countdown-grid div { display: flex; flex-direction: column; }
+
+
+/* 7. FAIXA (TICKER) ------------------------------------------------------- */
+.ticker {
+  overflow: hidden;
+  background: var(--lime);
+  color: var(--bg);
+  transform: rotate(-1.5deg) scale(1.05);   /* levemente torta: energia de cartaz de rua */
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  padding: 0.7rem 0;
+  font: 400 1.5rem/1 var(--font-title);
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: ticker 22s linear infinite;
+}
+.ticker-track span { padding-right: 1.5rem; }
+
+/* O texto aparece duas vezes; andar -50% e reiniciar dá o efeito de loop infinito */
+@keyframes ticker {
+  to { transform: translateX(-50%); }
+}
+
+
+/* 8. SEÇÕES E CARDS ------------------------------------------------------- */
+.section { padding: 5rem 0; }
+.section-alt { background: rgba(255, 255, 255, 0.025); }
+
+.section-title { font-size: clamp(2.2rem, 8vw, 4rem); }
+.section-lead { margin-top: 0.75rem; max-width: 36rem; }
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;             /* 1 coluna no mobile */
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.card {
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);            /* glassmorphism */
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover {
+  transform: translate(-4px, -4px);
+  border-color: var(--lime);
+  box-shadow: var(--shadow-hard);
+}
+.card h3 { margin-top: 1.25rem; font-size: 1.8rem; }
+.card p { margin-top: 0.6rem; }
+
+.card-icon {
+  width: 44px; height: 44px;
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* 9. TABELA DE PARTIDAS --------------------------------------------------- */
+.table-wrap { margin-top: 2.5rem; }
+
+.schedule {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Mobile: cada linha vira um card empilhado.
+   O cabeçalho some (visualmente) e cada célula mostra o rótulo via data-label. */
+.schedule thead {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.schedule tr {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.schedule td {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  color: var(--white);
+  text-align: right;
+}
+.schedule td[data-label]::before {
+  content: attr(data-label);              /* pega o texto do atributo HTML */
+  color: var(--gray);
+  text-align: left;
+}
+.schedule td:last-child { padding-top: 0.9rem; }
+.schedule td:last-child .btn { width: 100%; }
+
+
+/* 10. JANELA DE REGRAS ---------------------------------------------------- */
+.dialog {
+  width: min(100% - 2rem, 30rem);
+  padding: 2rem;
+  background: var(--bg);
+  color: var(--gray);
+  border: 2px solid var(--lime);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard);
+}
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+.dialog h2 { font-size: 2rem; }
+
+.rules {
+  margin: 1.25rem 0 1.75rem;
+  padding-left: 1.4rem;
+  list-style: decimal;                    /* aqui a numeração faz sentido: são regras em ordem */
+}
+.rules li { padding: 0.3rem 0 0.3rem 0.3rem; }
+.rules li::marker { color: var(--lime); font-weight: 700; }
+
+
+/* 11. RODAPÉ -------------------------------------------------------------- */
+.site-footer {
+  padding: 3.5rem 0 2rem;
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+.footer-text { margin-top: 0.5rem; font-size: 0.9rem; }
+
+.footer-heading {
+  margin-bottom: 0.75rem;
+  font: 700 1rem var(--font-body);
+  text-transform: none;
+  color: var(--white);
+}
+.footer-list li + li { margin-top: 0.5rem; }
+.footer-list a:hover { color: var(--lime); }
+
+.copyright {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+
+/* 12. TELAS MAIORES ------------------------------------------------------- */
+/* Tablet em diante */
+@media (min-width: 700px) {
+  .hero-actions { flex-direction: row; }
+
+  .cards { grid-template-columns: repeat(3, 1fr); }
+
+  .footer-inner { grid-template-columns: 2fr 1fr 1fr; }
+}
+
+/* Desktop: menu horizontal e tabela de verdade */
+@media (min-width: 900px) {
+  .menu-toggle { display: none; }
+
+  .nav {
+    position: static;
+    display: block;                       /* sempre visível */
+    background: none;
+    border: 0;
+  }
+  .nav-list { display: flex; gap: 2rem; }
+  .nav-list a { padding: 0.5rem 0; border: 0; }
+
+  .section { padding: 7rem 0; }
+
+  /* Volta para o layout de tabela normal */
+  .schedule thead {
+    position: static;
+    width: auto; height: auto;
+    clip-path: none;
+  }
+  .schedule th {
+    padding: 0 1rem 1rem;
+    color: var(--gray);
+    font-weight: 500;
+    text-align: left;
+  }
+  .schedule tr { display: table-row; margin: 0; padding: 0; background: none; border: 0; border-radius: 0; }
+  .schedule tbody tr { border-top: 1px solid var(--line); transition: background 0.15s ease; }
+  .schedule tbody tr:hover { background: var(--surface); }
+  .schedule td { display: table-cell; padding: 1.25rem 1rem; text-align: left; }
+  .schedule td[data-label]::before { content: none; }
+  .schedule td:last-child { padding-top: 1.25rem; text-align: right; }
+  .schedule td:last-child .btn { width: auto; }
+}
+
+
+/* 13. MOVIMENTO REDUZIDO -------------------------------------------------- */
+/* Respeita quem desativou animações no sistema (acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticker-track { animation: none; }
+  .btn, .card { transition: none; }
 }
